@@ -397,3 +397,18 @@
     border: 1px solid oklch(0.28 0.04 252);
   }
 }
+
+.btn-gold-pulse {
+  animation: gold-glow-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes gold-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0px oklch(0.88 0.12 82 / 0);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px oklch(0.88 0.12 82 / 0.5), 0 0 32px 8px
+      oklch(0.88 0.12 82 / 0.2);
+  }
+}

@@ -65,11 +65,17 @@ export default function Footer() {
               </span>
             </div>
             <p
-              className="text-sm leading-relaxed mb-5"
+              className="text-sm leading-relaxed mb-3"
               style={{ color: "oklch(0.45 0.02 252)" }}
             >
-              Relocation powered by technology. The fastest, safest, most
-              transparent way to move.
+              India's Smart Relocation Network. The fastest, safest, most
+              transparent way to move — across 500+ cities.
+            </p>
+            <p
+              className="text-xs mb-5"
+              style={{ color: "oklch(0.35 0.02 252)" }}
+            >
+              Operating across major cities in India
             </p>
             <div className="flex gap-2">
               {SOCIAL_ICONS.map(({ Icon, label }) => (

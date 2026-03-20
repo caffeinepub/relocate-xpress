@@ -1,6 +1,7 @@
 import { ChevronRight, MapPin } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_URL } from "../App";
+import { CITIES } from "../lib/relocateEngine";
 import RouteAnimation from "./RouteAnimation";
 
 interface HeroProps {
@@ -11,9 +12,95 @@ interface HeroProps {
   toLocation: string;
   setToLocation: (s: string) => void;
   onBookSlot: () => void;
+  dynamicPrice: number;
+  dynamicTimeLabel: string;
 }
 
 const HOME_SIZES = ["1BHK", "2BHK", "3BHK"];
+
+const ROUTE_PATHS = [
+  {
+    id: "r0",
+    d: "M 50 400 Q 300 100 600 350 Q 900 600 1150 200",
+    dur: "18s",
+    delay: "0s",
+  },
+  {
+    id: "r1",
+    d: "M 200 700 Q 500 400 800 600 Q 1000 750 1150 500",
+    dur: "24s",
+    delay: "3s",
+  },
+  {
+    id: "r2",
+    d: "M 0 200 Q 300 350 600 150 Q 900 -50 1200 300",
+    dur: "20s",
+    delay: "6s",
+  },
+  {
+    id: "r3",
+    d: "M 100 600 Q 400 300 700 500 Q 950 650 1200 400",
+    dur: "28s",
+    delay: "1s",
+  },
+  {
+    id: "r4",
+    d: "M 300 800 Q 600 500 900 700 Q 1100 800 1200 600",
+    dur: "22s",
+    delay: "9s",
+  },
+  {
+    id: "r5",
+    d: "M 0 500 Q 350 250 650 450 Q 850 600 1200 350",
+    dur: "30s",
+    delay: "4s",
+  },
+  {
+    id: "r6",
+    d: "M 400 50 Q 600 300 800 150 Q 1000 0 1150 350",
+    dur: "26s",
+    delay: "12s",
+  },
+  {
+    id: "r7",
+    d: "M 0 650 Q 200 450 500 580 Q 750 700 1100 500",
+    dur: "16s",
+    delay: "7s",
+  },
+];
+
+function useCountUp(target: number, duration = 600): number {
+  const [display, setDisplay] = useState(target);
+  const prevRef = useRef(target);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const start = prevRef.current;
+    const end = target;
+    if (start === end) return;
+    const startTime = performance.now();
+    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      const current = Math.round((start + (end - start) * eased) / 100) * 100;
+      setDisplay(current);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setDisplay(end);
+        prevRef.current = end;
+      }
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, duration]);
+
+  return display;
+}
 
 export default function Hero({
   homeSize,
@@ -23,11 +110,15 @@ export default function Hero({
   toLocation,
   setToLocation,
   onBookSlot: _onBookSlot,
+  dynamicPrice,
+  dynamicTimeLabel,
 }: HeroProps) {
   const [animKey, setAnimKey] = useState(0);
   const [isCalculating, setIsCalculating] = useState(false);
   const [secondsAgo, setSecondsAgo] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  const animatedPrice = useCountUp(dynamicPrice);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: setAnimKey is stable
   useEffect(() => {
@@ -35,7 +126,7 @@ export default function Hero({
     setIsCalculating(true);
     const timer = setTimeout(() => setIsCalculating(false), 800);
     return () => clearTimeout(timer);
-  }, [homeSize]);
+  }, [homeSize, fromLocation, toLocation]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — reset on animKey change
   useEffect(() => {
@@ -66,16 +157,13 @@ export default function Hero({
     setTimeout(() => setIsCalculating(false), 800);
   };
 
-  // Time and team size vary by home size for visual system feel
-  const timeMap: Record<string, number> = { "1BHK": 4, "2BHK": 6, "3BHK": 8 };
   const teamMap: Record<string, number> = { "1BHK": 3, "2BHK": 4, "3BHK": 5 };
-  const time = timeMap[homeSize] ?? 6;
   const team = teamMap[homeSize] ?? 4;
 
   const rows = [
     {
       label: "Estimated Time",
-      value: `${time} Hours`,
+      value: dynamicTimeLabel,
       icon: "⏱",
       highlight: false,
       badge: false,
@@ -83,7 +171,7 @@ export default function Hero({
     },
     {
       label: "Starting Price",
-      value: "Starting from ₹9,500",
+      value: `Starting from ₹${animatedPrice.toLocaleString("en-IN")}`,
       icon: "₹",
       highlight: true,
       badge: false,
@@ -115,6 +203,13 @@ export default function Hero({
         ? "Updated 1 sec ago"
         : `Updated ${secondsAgo} sec ago`;
 
+  const selectStyle = {
+    background: "oklch(0.09 0.025 252)",
+    border: "1px solid oklch(0.22 0.04 252)",
+    borderRadius: "0.75rem",
+    color: "oklch(0.97 0.008 252)",
+  };
+
   return (
     <section
       id="services"
@@ -130,7 +225,62 @@ export default function Hero({
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl w-full px-4">
+      {/* Animated route lines background */}
+      <svg
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }}
+        viewBox="0 0 1200 800"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          {ROUTE_PATHS.map((route) => (
+            <radialGradient
+              key={route.id}
+              id={`dotGrad_${route.id}`}
+              cx="50%"
+              cy="50%"
+              r="50%"
+            >
+              <stop
+                offset="0%"
+                stopColor="oklch(0.88 0.12 82)"
+                stopOpacity="0.6"
+              />
+              <stop
+                offset="100%"
+                stopColor="oklch(0.88 0.12 82)"
+                stopOpacity="0"
+              />
+            </radialGradient>
+          ))}
+        </defs>
+        {ROUTE_PATHS.map((route) => (
+          <g key={route.id}>
+            <path
+              id={`heroPath_${route.id}`}
+              d={route.d}
+              fill="none"
+              stroke="oklch(0.84 0.14 207 / 0.06)"
+              strokeWidth="1"
+            />
+            <circle r="3" fill={`url(#dotGrad_${route.id})`} opacity="0.7">
+              <animateMotion
+                dur={route.dur}
+                repeatCount="indefinite"
+                begin={route.delay}
+              >
+                <mpath href={`#heroPath_${route.id}`} />
+              </animateMotion>
+            </circle>
+          </g>
+        ))}
+      </svg>
+
+      <div
+        className="relative mx-auto max-w-6xl w-full px-4"
+        style={{ zIndex: 10 }}
+      >
         {/* TOP TRUST BAR */}
         <div className="flex items-center justify-center mb-6">
           <div
@@ -142,47 +292,47 @@ export default function Hero({
             }}
           >
             <span>⭐</span>
-            <span>Trusted by 1000+ customers</span>
+            <span>Trusted by 10,000+ customers across India</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div className="flex flex-col gap-6">
             <div>
-              <h1 className="text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight mb-4">
+              {/* Brand positioning line */}
+              <p
+                className="text-xs font-semibold uppercase tracking-[0.2em] mb-3"
+                style={{ color: "oklch(0.82 0.11 82 / 0.65)" }}
+              >
+                India's Smart Relocation Network
+              </p>
+
+              <h1 className="text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight mb-3">
                 <span className="text-foreground">Your move. </span>
                 <span style={{ color: "oklch(0.88 0.12 82)" }}>
                   Fully controlled.
                 </span>
               </h1>
+
               <p
-                className="text-base"
-                style={{ color: "oklch(0.62 0.02 252)" }}
+                className="text-base font-bold mb-1"
+                style={{ color: "oklch(0.88 0.12 82)" }}
               >
-                Zero damage. Zero hidden charges.
+                Across India — Door to Door
               </p>
+
               <p
                 className="text-lg font-bold"
                 style={{ color: "oklch(0.88 0.12 82)" }}
               >
                 Or we pay you.
               </p>
-            </div>
 
-            {/* Urgency strip */}
-            <div
-              className="flex items-center gap-2 mb-1"
-              style={{ marginTop: "-4px" }}
-            >
-              <span
-                className="inline-block w-1.5 h-1.5 rounded-full animate-pulse-dot"
-                style={{ background: "oklch(0.72 0.18 142)", flexShrink: 0 }}
-              />
               <p
-                className="text-xs font-semibold tracking-wide"
-                style={{ color: "oklch(0.72 0.18 142)" }}
+                className="text-xs font-medium mt-2"
+                style={{ color: "oklch(0.55 0.02 252)", fontStyle: "italic" }}
               >
-                Next available slot: Today, 6:30 PM
+                Real-time pricing. Real-time tracking.
               </p>
             </div>
 
@@ -200,7 +350,7 @@ export default function Hero({
 
               <div className="mb-3">
                 <label
-                  htmlFor="from-input"
+                  htmlFor="from-select"
                   className="text-xs font-medium mb-1.5 block"
                   style={{ color: "oklch(0.62 0.02 252)" }}
                 >
@@ -208,22 +358,27 @@ export default function Hero({
                 </label>
                 <div className="relative">
                   <MapPin
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                    style={{ color: "oklch(0.82 0.11 82 / 0.7)" }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+                    style={{ color: "oklch(0.82 0.11 82 / 0.7)", zIndex: 1 }}
                   />
-                  <input
-                    id="from-input"
-                    data-ocid="hero.from.input"
+                  <select
+                    id="from-select"
+                    data-ocid="hero.from.select"
                     value={fromLocation}
                     onChange={(e) => handleFromChange(e.target.value)}
-                    className="w-full pl-9 pr-4 py-3 rounded-xl text-sm font-medium text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-[oklch(0.82_0.11_82/0.5)] focus:border-[oklch(0.82_0.11_82/0.4)] transition-all"
-                    style={{
-                      background: "oklch(0.09 0.025 252)",
-                      border: "1px solid oklch(0.22 0.04 252)",
-                      borderRadius: "0.75rem",
-                    }}
-                    placeholder="Origin city"
-                  />
+                    className="w-full pl-9 pr-4 py-3 rounded-xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[oklch(0.82_0.11_82/0.5)] transition-all appearance-none cursor-pointer"
+                    style={selectStyle}
+                  >
+                    {CITIES.map((city) => (
+                      <option
+                        key={city}
+                        value={city}
+                        style={{ background: "oklch(0.09 0.025 252)" }}
+                      >
+                        {city}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -249,7 +404,7 @@ export default function Hero({
 
               <div className="mb-4">
                 <label
-                  htmlFor="to-input"
+                  htmlFor="to-select"
                   className="text-xs font-medium mb-1.5 block"
                   style={{ color: "oklch(0.62 0.02 252)" }}
                 >
@@ -257,22 +412,27 @@ export default function Hero({
                 </label>
                 <div className="relative">
                   <MapPin
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                    style={{ color: "oklch(0.84 0.14 207 / 0.7)" }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+                    style={{ color: "oklch(0.84 0.14 207 / 0.7)", zIndex: 1 }}
                   />
-                  <input
-                    id="to-input"
-                    data-ocid="hero.to.input"
+                  <select
+                    id="to-select"
+                    data-ocid="hero.to.select"
                     value={toLocation}
                     onChange={(e) => handleToChange(e.target.value)}
-                    className="w-full pl-9 pr-4 py-3 rounded-xl text-sm font-medium text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-[oklch(0.82_0.11_82/0.5)] focus:border-[oklch(0.82_0.11_82/0.4)] transition-all"
-                    style={{
-                      background: "oklch(0.09 0.025 252)",
-                      border: "1px solid oklch(0.22 0.04 252)",
-                      borderRadius: "0.75rem",
-                    }}
-                    placeholder="Destination city"
-                  />
+                    className="w-full pl-9 pr-4 py-3 rounded-xl text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[oklch(0.82_0.11_82/0.5)] transition-all appearance-none cursor-pointer"
+                    style={selectStyle}
+                  >
+                    {CITIES.map((city) => (
+                      <option
+                        key={city}
+                        value={city}
+                        style={{ background: "oklch(0.09 0.025 252)" }}
+                      >
+                        {city}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -327,35 +487,20 @@ export default function Hero({
               </div>
 
               <div className="flex flex-col gap-2.5">
-                {/* Emotional trust line above CTA */}
-                <p
-                  className="text-center text-sm font-semibold"
-                  style={{ color: "oklch(0.72 0.18 142)" }}
-                >
-                  This move is protected.
-                </p>
                 <a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-ocid="hero.lock_slot.primary_button"
-                  className="btn-gold w-full py-4 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150 text-center block"
+                  className="btn-gold btn-gold-pulse w-full py-4 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150 text-center block"
                 >
-                  Lock My Slot Now
+                  Lock My Move in 30 Seconds
                 </a>
-                {/* WhatsApp conversion text */}
                 <p
                   className="text-center text-xs font-semibold"
                   style={{ color: "oklch(0.72 0.18 142)" }}
                 >
                   ⚡ Instant confirmation on WhatsApp
-                </p>
-                {/* Micro trust below CTA */}
-                <p
-                  className="text-center text-xs"
-                  style={{ color: "oklch(0.45 0.02 252)" }}
-                >
-                  No damage. No hidden charges. No risk.
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   <a
@@ -532,24 +677,39 @@ export default function Hero({
                     ) : (
                       <span
                         className="text-sm font-bold"
-                        style={{
-                          color: "oklch(0.92 0.008 252)",
-                        }}
+                        style={{ color: "oklch(0.92 0.008 252)" }}
                       >
                         {row.value}
                       </span>
                     )}
                   </div>
                   {row.isPrice && (
-                    <p
-                      className="text-xs pb-2"
+                    <div
                       style={{
-                        color: "oklch(0.48 0.02 252)",
                         paddingLeft: "2.25rem",
+                        paddingBottom: "0.5rem",
                       }}
                     >
-                      *Final price confirmed after quick inspection on WhatsApp
-                    </p>
+                      <p
+                        className="text-xs"
+                        style={{ color: "oklch(0.48 0.02 252)" }}
+                      >
+                        *Final price confirmed after quick inspection on
+                        WhatsApp
+                      </p>
+                      <p
+                        className="text-xs mt-1"
+                        style={{ color: "oklch(0.48 0.02 252)" }}
+                      >
+                        Based on 2,347 similar moves
+                      </p>
+                      <p
+                        className="text-xs mt-0.5 italic"
+                        style={{ color: "oklch(0.55 0.02 252)" }}
+                      >
+                        Optimizing route, team &amp; logistics in real-time...
+                      </p>
+                    </div>
                   )}
                 </div>
               ))}
@@ -575,6 +735,18 @@ export default function Hero({
                 Protected by Relocate Xpress System
               </span>
             </div>
+
+            <p
+              className="text-center mt-2"
+              style={{
+                fontSize: "10px",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+                color: "oklch(0.84 0.14 207 / 0.5)",
+              }}
+            >
+              Powered by Relocate Xpress Intelligence System™
+            </p>
           </div>
         </div>
       </div>

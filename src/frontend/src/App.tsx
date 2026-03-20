@@ -8,6 +8,8 @@ import Hero from "./components/Hero";
 import ItemSelectorSection from "./components/ItemSelectorSection";
 import LiveOpsHowItWorks from "./components/LiveOpsHowItWorks";
 import MovePlan from "./components/MovePlan";
+import NationalTrustBar from "./components/NationalTrustBar";
+import { calcPrice, calcTimeLabel, getDistance } from "./lib/relocateEngine";
 
 const queryClient = new QueryClient();
 
@@ -20,8 +22,11 @@ export function openWhatsApp() {
 
 export default function App() {
   const [homeSize, setHomeSize] = useState("2BHK");
-  const [fromLocation, setFromLocation] = useState("Whitefield");
-  const [toLocation, setToLocation] = useState("Indiranagar");
+  const [fromLocation, setFromLocation] = useState("Bangalore");
+  const [toLocation, setToLocation] = useState("Mumbai");
+
+  const dynamicPrice = calcPrice(fromLocation, toLocation, homeSize);
+  const dynamicTimeLabel = calcTimeLabel(getDistance(fromLocation, toLocation));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -39,11 +44,16 @@ export default function App() {
             toLocation={toLocation}
             setToLocation={setToLocation}
             onBookSlot={openWhatsApp}
+            dynamicPrice={dynamicPrice}
+            dynamicTimeLabel={dynamicTimeLabel}
           />
+          <NationalTrustBar />
           <MovePlan
             homeSize={homeSize}
             fromLocation={fromLocation}
             toLocation={toLocation}
+            dynamicPrice={dynamicPrice}
+            dynamicTimeLabel={dynamicTimeLabel}
           />
           <LiveOpsHowItWorks />
           <ItemSelectorSection />

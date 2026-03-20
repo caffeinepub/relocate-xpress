@@ -5,6 +5,8 @@ interface MovePlanProps {
   homeSize: string;
   fromLocation: string;
   toLocation: string;
+  dynamicPrice: number;
+  dynamicTimeLabel: string;
 }
 
 const FEATURES = [
@@ -34,12 +36,10 @@ export default function MovePlan({
   homeSize,
   fromLocation,
   toLocation,
+  dynamicPrice,
+  dynamicTimeLabel,
 }: MovePlanProps) {
   const { data: estimate } = useGetEstimate(homeSize);
-  const cost = estimate
-    ? Number(estimate.cost).toLocaleString("en-IN")
-    : "8,500";
-  const time = estimate ? Number(estimate.time) : 6;
   const team = estimate ? Number(estimate.teamSize) : 4;
 
   return (
@@ -96,7 +96,7 @@ export default function MovePlan({
                 className="text-base font-bold"
                 style={{ color: "oklch(0.88 0.12 82)" }}
               >
-                ₹{cost}
+                ₹{dynamicPrice.toLocaleString("en-IN")}
               </p>
             </div>
             <div>
@@ -107,7 +107,7 @@ export default function MovePlan({
                 Duration
               </p>
               <p className="text-base font-bold text-foreground">
-                {time} Hours
+                {dynamicTimeLabel}
               </p>
             </div>
             <div>

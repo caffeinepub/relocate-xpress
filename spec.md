@@ -1,43 +1,45 @@
-# Relocate Xpress — OS Enhancement (Version 4)
+# Relocate Xpress — Real-Time Intelligence Upgrade
 
 ## Current State
-A dark-mode relocation landing page with gold accents, live system section, animated route, live ops trucks, guarantee section, and a booking modal. Already has animated elements, glassmorphism cards, LIVE badge, and real-time counter.
+- Hero has static text fields for From/To cities (free text inputs)
+- Price is hardcoded as "Starting from ₹9,500" — not dynamic
+- Time estimate is based only on home size (not distance)
+- Team size based only on home size
+- Hero has text clutter (urgency strip, "This move is protected", "Serving 500+ cities" line)
+- CTA button has no glow-pulse animation
+- MovePlan component also shows static pricing from backend hook
 
 ## Requested Changes (Diff)
 
 ### Add
-- Pulsing glow keyframe animation on the LIVE badge in Hero system panel and LiveOps section
-- Animated SVG line/graph in the system section (Hero right column) — scrolling data line
-- Micro text "Updating…" / "Updated X sec ago" — already exists, enhance with "Updating…" phase
-- Urgency strip below headline: "Next available slot: Today, 6:30 PM"
-- Trust intensifier line under guarantee: "Zero disputes. Zero follow-ups. Instant resolution."
-- New keyframe: `live-glow-pulse` for LIVE badge
-- New keyframe: `graph-line-scroll` for animated graph in system section
+- City distance lookup table (~20 major Indian cities, approximate km between pairs)
+- Dynamic pricing formula: Base ₹3000 + (distance × ₹12) + home size addon (0/2000/4000)
+- Dynamic time estimation: 0-50km→4-6h, 50-300→6-12h, 300-800→12-24h, 800+→1-3 days
+- Animated count-up effect when price changes
+- "Based on 2,347 similar moves" below price
+- "Optimizing route, team & logistics in real-time..." micro text
+- Glow-pulse CSS animation on CTA button
+- City dropdown selectors (replacing free text inputs) with major Indian cities list
 
 ### Modify
-- CTA button text: "Secure My Move" → "Lock My Safe Move" (both in Hero and Guarantee)
-- System section (Hero right column): increase padding/size by ~15%, add stronger glow border (blue/green), elevated shadow
-- Buttons: add stronger shadow + depth on hover (active press effect)
-- Cards: slightly elevated with deeper shadow
-- Spacing: reduce section/element spacing by ~5–8% throughout
-- LIVE badge: add pulsing glow animation
-- `updatedText` logic: include "Updating…" phase (show "Updating…" briefly every ~10 seconds)
+- Hero: Replace free-text city inputs with dropdown selects
+- Hero: Remove text clutter — keep only: headline, "Across India — Door to Door", "Real-time pricing. Real-time tracking.", "Or we pay you."
+- Hero: Remove "Serving 500+ cities", urgency strip, "This move is protected.", "Zero damage. Zero hidden charges."
+- Hero: Price row in system panel becomes dynamic with count-up animation
+- Hero: Time row becomes distance-based
+- Hero: CTA button gets CSS glow-pulse animation
+- MovePlan: Show same dynamic price (pass computed price down from App state)
 
 ### Remove
-- Nothing removed
+- "Serving 500+ cities across India" line in hero
+- "Next available slot: Today, 6:30 PM" urgency strip
+- "This move is protected." line above CTA
+- "Zero damage. No hidden charges. No risk." below CTA (keep minimal)
+- Static ₹9,500 price
 
 ## Implementation Plan
-1. Add CSS keyframes for `live-glow-pulse` and `graph-scroll` in index.css
-2. Enhance btn-gold styles: bigger, stronger glow, press depth active state
-3. Enhance glass-card: slightly more elevation shadow
-4. Update Hero.tsx:
-   - Add urgency strip below headline
-   - Change CTA text to "Lock My Safe Move"
-   - Enhance LIVE badge with pulsing glow class
-   - Add animated graph SVG inside system panel
-   - Enhance system section border/glow and padding (scale up ~15%)
-   - Update updatedText logic to cycle "Updating…" briefly
-5. Update Guarantee.tsx:
-   - Change CTA text to "Lock My Safe Move"
-   - Add "Zero disputes. Zero follow-ups. Instant resolution." below guarantee headline
-6. Reduce py-24 to py-20 in section spacing across components
+1. Create `src/frontend/src/lib/relocateEngine.ts` — city distance matrix, pricing formula, time estimation
+2. Update `App.tsx` to compute dynamic price/time and pass as props
+3. Update `Hero.tsx` — dropdown cities, dynamic price with count-up, cleaned hero text, CTA glow
+4. Update `MovePlan.tsx` — accept and display dynamic price/time props
+5. Add CSS for glow-pulse CTA button animation and count-up in index.css

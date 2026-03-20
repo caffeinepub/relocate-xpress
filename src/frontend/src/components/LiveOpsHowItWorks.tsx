@@ -35,6 +35,14 @@ function getStatus(status: unknown): string {
   return "active";
 }
 
+const FALLBACK_OPERATIONS = [
+  { number: 21, location: "Bangalore → Mumbai", status: "inTransit" },
+  { number: 8, location: "Delhi → Pune", status: "active" },
+  { number: 34, location: "Hyderabad → Chennai", status: "completed" },
+  { number: 15, location: "Kolkata → Bangalore", status: "active" },
+  { number: 47, location: "Pune → Delhi", status: "inTransit" },
+];
+
 const STEPS = [
   {
     num: "01",
@@ -64,14 +72,20 @@ export default function LiveOpsHowItWorks() {
     return () => clearInterval(interval);
   }, []);
 
+  const usingFallback = trucks.length === 0;
+  const displayOps = usingFallback ? FALLBACK_OPERATIONS : trucks;
+
   // Use realistic fallback values — show real-feeling numbers even if backend returns 0
-  const activeMoves =
-    trucks.filter((t) => getStatus(t.status) === "active").length || 12;
+  const activeMoves = usingFallback
+    ? 120
+    : trucks.filter((t) => getStatus(t.status) === "active").length || 120;
   const completed = trucks.filter(
     (t) => getStatus(t.status) === "completed",
   ).length;
   const completionPct =
     trucks.length > 0 ? Math.round((completed / trucks.length) * 100) : 98;
+
+  const activeMovesDisplay = usingFallback ? "120+" : `${activeMoves}`;
 
   return (
     <section id="operation-center" className="py-20 px-4">
@@ -94,7 +108,7 @@ export default function LiveOpsHowItWorks() {
                   Live Operations
                 </p>
                 <h2 className="text-xl font-black text-foreground">
-                  Real-Time Truck Network
+                  National Logistics Network
                 </h2>
               </div>
               <div className="flex items-center gap-1.5">
@@ -123,7 +137,7 @@ export default function LiveOpsHowItWorks() {
                   className="text-2xl font-black"
                   style={{ color: "oklch(0.72 0.18 142)" }}
                 >
-                  {activeMoves}
+                  {activeMovesDisplay}
                 </p>
                 <p
                   className="text-xs mt-0.5"
@@ -155,7 +169,7 @@ export default function LiveOpsHowItWorks() {
             </div>
 
             <div key={refreshTick} className="space-y-2">
-              {trucks.map((truck, i) => {
+              {displayOps.map((truck, i) => {
                 const statusKey = getStatus(truck.status);
                 const cfg = STATUS_CONFIG[statusKey] ?? STATUS_CONFIG.active;
                 return (
@@ -215,7 +229,7 @@ export default function LiveOpsHowItWorks() {
                 className="text-xs"
                 style={{ color: "oklch(0.45 0.02 252)" }}
               >
-                System auto-updating
+                Nationwide operations updating in real-time
               </span>
             </div>
           </div>

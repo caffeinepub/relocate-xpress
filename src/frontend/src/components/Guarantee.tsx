@@ -8,23 +8,23 @@ const GUARANTEES = [
   {
     icon: Shield,
     title: "Zero Damage",
-    desc: "Military-grade packing. If anything breaks, we replace it. Full stop.",
+    desc: "Military-grade packing. Anything breaks — we replace it.",
     color: "oklch(0.84 0.14 207)",
     bg: "oklch(0.84 0.14 207 / 0.08)",
     border: "oklch(0.84 0.14 207 / 0.25)",
   },
   {
     icon: CheckCircle,
-    title: "Zero Hidden Charges",
-    desc: "Your quote is your final bill. No surprise fees, ever.",
+    title: "No Hidden Charges",
+    desc: "Your quote is your final bill. No surprises.",
     color: "oklch(0.82 0.11 82)",
     bg: "oklch(0.82 0.11 82 / 0.08)",
     border: "oklch(0.82 0.11 82 / 0.25)",
   },
   {
     icon: AlertCircle,
-    title: "100% Assurance",
-    desc: "Something goes wrong? We don't argue. We don't delay. We pay.",
+    title: "Full Assurance",
+    desc: "Something goes wrong? We don't argue. We pay.",
     color: "oklch(0.72 0.18 142)",
     bg: "oklch(0.72 0.18 142 / 0.08)",
     border: "oklch(0.72 0.18 142 / 0.25)",
@@ -33,7 +33,7 @@ const GUARANTEES = [
 
 export default function Guarantee({ onBookSlot }: GuaranteeProps) {
   return (
-    <section id="guarantee" className="py-24 px-4 relative overflow-hidden">
+    <section id="guarantee" className="py-20 px-4 relative overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -54,11 +54,32 @@ export default function Guarantee({ onBookSlot }: GuaranteeProps) {
             Guarantee
           </h2>
           <p
-            className="text-xl md:text-2xl font-bold max-w-2xl mx-auto"
-            style={{ color: "oklch(0.88 0.12 82)", lineHeight: 1.4 }}
+            className="text-xl md:text-2xl font-black max-w-2xl mx-auto"
+            style={{
+              color: "oklch(0.88 0.12 82)",
+              lineHeight: 1.4,
+              textShadow: "0 0 30px oklch(0.82 0.11 82 / 0.3)",
+            }}
           >
-            "If anything goes wrong, we don't argue. We pay."
+            "If anything goes wrong — we don't argue. We pay."
           </p>
+          {/* Trust intensifier */}
+          <p
+            className="text-sm font-semibold mt-3"
+            style={{ color: "oklch(0.62 0.02 252)" }}
+          >
+            Zero disputes. Zero follow-ups. Instant resolution.
+          </p>
+          <div
+            style={{
+              width: "80px",
+              height: "2px",
+              background: "oklch(0.88 0.12 82)",
+              margin: "12px auto 0",
+              borderRadius: "9999px",
+              boxShadow: "0 0 10px oklch(0.88 0.12 82 / 0.4)",
+            }}
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
@@ -66,11 +87,12 @@ export default function Guarantee({ onBookSlot }: GuaranteeProps) {
             <div
               key={g.title}
               data-ocid={`guarantee.${g.title.toLowerCase().replace(/ /g, "_")}.card`}
-              className="rounded-2xl p-6 transition-all hover:-translate-y-1"
+              className="rounded-2xl p-6 transition-all duration-200 hover:-translate-y-1"
               style={{
                 background: g.bg,
                 border: `1px solid ${g.border}`,
                 borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px oklch(0 0 0 / 0.3)",
               }}
             >
               <div
@@ -93,16 +115,22 @@ export default function Guarantee({ onBookSlot }: GuaranteeProps) {
         </div>
 
         <div className="text-center">
+          <p
+            className="text-base font-semibold mb-3"
+            style={{ color: "oklch(0.72 0.18 142)" }}
+          >
+            This move is protected.
+          </p>
           <button
             type="button"
             data-ocid="guarantee.book_now.primary_button"
             onClick={onBookSlot}
-            className="btn-gold px-10 py-4 text-base font-black tracking-wide"
+            className="btn-gold px-12 py-4 text-base font-black tracking-wide hover:scale-[1.03] transition-transform duration-150"
           >
-            Lock My Slot Now
+            Lock My Safe Move
           </button>
           <p className="mt-3 text-xs" style={{ color: "oklch(0.45 0.02 252)" }}>
-            No commitment required. Cancel anytime before 24 hours.
+            No damage. No hidden charges. No risk.
           </p>
         </div>
       </div>

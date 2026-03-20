@@ -1,14 +1,6 @@
-import { Zap } from "lucide-react";
+import { Phone, Zap } from "lucide-react";
 
-interface HeaderProps {
-  onBookNow: () => void;
-}
-
-export default function Header({ onBookNow }: HeaderProps) {
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
+export default function Header() {
   return (
     <header className="sticky top-0 z-50 px-4 pt-4 pb-2">
       <div
@@ -36,31 +28,14 @@ export default function Header({ onBookNow }: HeaderProps) {
           </span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-6">
-          {["Services", "Operation Center", "Technology", "Guarantee"].map(
-            (link) => (
-              <button
-                key={link}
-                type="button"
-                data-ocid={`nav.${link.toLowerCase().replace(/ /g, "_")}.link`}
-                onClick={() => scrollTo(link.toLowerCase().replace(/ /g, "-"))}
-                className="text-sm font-medium transition-colors hover:text-foreground"
-                style={{ color: "oklch(0.62 0.02 252)" }}
-              >
-                {link}
-              </button>
-            ),
-          )}
-        </nav>
-
-        <button
-          type="button"
-          data-ocid="header.book_now.button"
-          onClick={onBookNow}
-          className="btn-gold px-5 py-2 text-sm font-bold"
+        <a
+          href="tel:+918001234567"
+          data-ocid="header.call_now.button"
+          className="flex items-center gap-1.5 btn-ghost-white px-4 py-2 text-sm font-semibold"
         >
-          BOOK NOW
-        </button>
+          <Phone className="w-3.5 h-3.5" />
+          Call Now
+        </a>
       </div>
     </header>
   );

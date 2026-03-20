@@ -1,33 +1,43 @@
-# Relocate Xpress
+# Relocate Xpress — OS Enhancement (Version 4)
 
 ## Current State
-New project. No existing application files.
+A dark-mode relocation landing page with gold accents, live system section, animated route, live ops trucks, guarantee section, and a booking modal. Already has animated elements, glassmorphism cards, LIVE badge, and real-time counter.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Full landing page for Relocate Xpress relocation company
-- Hero section with trust badge, headline, subheadline, gold "Or we pay you" highlight
-- Interactive input panel: From/To location fields + Home Size selector (1BHK/2BHK/3BHK), pre-filled with Whitefield → Indiranagar
-- Live system output card: Estimated Time, Estimated Cost, Team Assigned, Risk Level — computed reactively from input
-- Animated background route/map lines (subtle, minimal)
-- Three CTAs: "Lock My Slot Now" (primary/gold glow), "Get Price in 30 Sec" (secondary), "Talk to Expert" (tertiary)
-- "Your Move Plan" section: personalized card showing route, price, time, team, guarantee badge
-- "Live Operations" section: real-time-style truck status dashboard (Active/In Transit/Completed)
-- "How It Works" section: 3 steps with icons, no paragraphs
-- "Guarantee" section: bold centered "If anything goes wrong, we don't argue. We pay."
-- Motoko backend storing pricing config and serving move estimates
+- Pulsing glow keyframe animation on the LIVE badge in Hero system panel and LiveOps section
+- Animated SVG line/graph in the system section (Hero right column) — scrolling data line
+- Micro text "Updating…" / "Updated X sec ago" — already exists, enhance with "Updating…" phase
+- Urgency strip below headline: "Next available slot: Today, 6:30 PM"
+- Trust intensifier line under guarantee: "Zero disputes. Zero follow-ups. Instant resolution."
+- New keyframe: `live-glow-pulse` for LIVE badge
+- New keyframe: `graph-line-scroll` for animated graph in system section
 
 ### Modify
-N/A
+- CTA button text: "Secure My Move" → "Lock My Safe Move" (both in Hero and Guarantee)
+- System section (Hero right column): increase padding/size by ~15%, add stronger glow border (blue/green), elevated shadow
+- Buttons: add stronger shadow + depth on hover (active press effect)
+- Cards: slightly elevated with deeper shadow
+- Spacing: reduce section/element spacing by ~5–8% throughout
+- LIVE badge: add pulsing glow animation
+- `updatedText` logic: include "Updating…" phase (show "Updating…" briefly every ~10 seconds)
 
 ### Remove
-N/A
+- Nothing removed
 
 ## Implementation Plan
-1. Backend: Motoko actor with pricing logic per home size, returns estimated cost/time/team for a given home size
-2. Frontend: Single-page React app with all sections
-3. Design: Dark navy/black bg, gold accents, glassmorphism cards, premium typography
-4. Interactivity: Inputs update system output card live; animated SVG background lines
-5. Live Operations: Simulated truck statuses cycling with subtle animation
-6. All CTAs functional (scroll to form or open modal)
+1. Add CSS keyframes for `live-glow-pulse` and `graph-scroll` in index.css
+2. Enhance btn-gold styles: bigger, stronger glow, press depth active state
+3. Enhance glass-card: slightly more elevation shadow
+4. Update Hero.tsx:
+   - Add urgency strip below headline
+   - Change CTA text to "Lock My Safe Move"
+   - Enhance LIVE badge with pulsing glow class
+   - Add animated graph SVG inside system panel
+   - Enhance system section border/glow and padding (scale up ~15%)
+   - Update updatedText logic to cycle "Updating…" briefly
+5. Update Guarantee.tsx:
+   - Change CTA text to "Lock My Safe Move"
+   - Add "Zero disputes. Zero follow-ups. Instant resolution." below guarantee headline
+6. Reduce py-24 to py-20 in section spacing across components

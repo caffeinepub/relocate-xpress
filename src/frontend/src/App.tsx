@@ -23,7 +23,7 @@ export default function App() {
         className="min-h-screen bg-background font-inter"
         style={{ background: "oklch(0.085 0.024 252)" }}
       >
-        <Header onBookNow={() => setBookingOpen(true)} />
+        <Header />
         <main>
           <Hero
             homeSize={homeSize}

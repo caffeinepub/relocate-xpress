@@ -61,7 +61,7 @@ export default function MovePlan({
         </div>
 
         <div
-          className="glass-card rounded-2xl p-6 mb-8 glow-gold relative overflow-hidden"
+          className="glass-card rounded-2xl p-6 mb-8 relative overflow-hidden"
           style={{ borderRadius: "1.25rem" }}
         >
           <div
@@ -148,8 +148,12 @@ export default function MovePlan({
             <div
               key={f.title}
               data-ocid={`move_plan.${f.title.toLowerCase().replace(/ /g, "_")}.card`}
-              className="glass-card rounded-2xl p-5 gold-border transition-all hover:glow-gold"
-              style={{ borderRadius: "1.25rem" }}
+              className="glass-card rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1"
+              style={{
+                borderRadius: "1.25rem",
+                border: "1px solid oklch(0.22 0.04 252)",
+                boxShadow: "0 2px 12px oklch(0 0 0 / 0.25)",
+              }}
             >
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center mb-4"

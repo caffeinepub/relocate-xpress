@@ -1,45 +1,36 @@
-# Relocate Xpress — Real-Time Intelligence Upgrade
+# MoveX — Premium Brand Upgrade
 
 ## Current State
-- Hero has static text fields for From/To cities (free text inputs)
-- Price is hardcoded as "Starting from ₹9,500" — not dynamic
-- Time estimate is based only on home size (not distance)
-- Team size based only on home size
-- Hero has text clutter (urgency strip, "This move is protected", "Serving 500+ cities" line)
-- CTA button has no glow-pulse animation
-- MovePlan component also shows static pricing from backend hook
+MoveX is a fully built landing page with dark navy/gold theme, hero estimator, live ops, item selector, and guarantee sections. Footer has old services list, old company links, and old email (info@relocatexpress.com). No individual service pages exist. Contact details partially outdated.
 
 ## Requested Changes (Diff)
 
 ### Add
-- City distance lookup table (~20 major Indian cities, approximate km between pairs)
-- Dynamic pricing formula: Base ₹3000 + (distance × ₹12) + home size addon (0/2000/4000)
-- Dynamic time estimation: 0-50km→4-6h, 50-300→6-12h, 300-800→12-24h, 800+→1-3 days
-- Animated count-up effect when price changes
-- "Based on 2,347 similar moves" below price
-- "Optimizing route, team & logistics in real-time..." micro text
-- Glow-pulse CSS animation on CTA button
-- City dropdown selectors (replacing free text inputs) with major Indian cities list
+- React Router for routing (or hash-based navigation) to support service sub-pages
+- 4 service detail pages: HomeRelocation, OfficeRelocation, IntercityMoving, VehicleTransportation
+  - Each page: minimal layout, title, bullet-list "What you get", closing statement, back-to-home link, WhatsApp CTA
+- "Our System" section on the main landing page (between How It Works and Item Selector or standalone)
+- Clickable service links in footer/services section for the 4 main services
 
 ### Modify
-- Hero: Replace free-text city inputs with dropdown selects
-- Hero: Remove text clutter — keep only: headline, "Across India — Door to Door", "Real-time pricing. Real-time tracking.", "Or we pay you."
-- Hero: Remove "Serving 500+ cities", urgency strip, "This move is protected.", "Zero damage. Zero hidden charges."
-- Hero: Price row in system panel becomes dynamic with count-up animation
-- Hero: Time row becomes distance-based
-- Hero: CTA button gets CSS glow-pulse animation
-- MovePlan: Show same dynamic price (pass computed price down from App state)
+- Footer SERVICES column: update to the 8 new services; make first 4 clickable (route to service pages), last 4 non-clickable
+- Footer COMPANY column: replace with About MoveX, Our System, Safety & Guarantee, Careers, Contact
+- Footer email: change from info@relocatexpress.com to support@movexindia.com
+- Footer address: update to "4th A, 1st Main Rd, Mysore Rd, Metro Layout, Nayandahalli, Bengaluru, Karnataka 560026"
+- Footer Google Maps link: update to match new address
+- Footer: remove caffeine.ai / caffeine.xyz built-with link at bottom
+- Hero / all sections: remove any remaining "Relocate Xpress" references; replace with MoveX
+- Brand language: replace "Packers & Movers" with "Relocation System"/"Move Intelligence"/"Logistics Engine" wherever found
 
 ### Remove
-- "Serving 500+ cities across India" line in hero
-- "Next available slot: Today, 6:30 PM" urgency strip
-- "This move is protected." line above CTA
-- "Zero damage. No hidden charges. No risk." below CTA (keep minimal)
-- Static ₹9,500 price
+- All references to "Relocate Xpress"
+- Old email ID (info@relocatexpress.com)
+- caffeine.xyz / caffeine.ai draft link from footer bottom bar
 
 ## Implementation Plan
-1. Create `src/frontend/src/lib/relocateEngine.ts` — city distance matrix, pricing formula, time estimation
-2. Update `App.tsx` to compute dynamic price/time and pass as props
-3. Update `Hero.tsx` — dropdown cities, dynamic price with count-up, cleaned hero text, CTA glow
-4. Update `MovePlan.tsx` — accept and display dynamic price/time props
-5. Add CSS for glow-pulse CTA button animation and count-up in index.css
+1. Add react-router-dom (or use HashRouter) to support multi-page routing
+2. Create service page components: HomeRelocationPage, OfficeRelocationPage, IntercityMovingPage, VehicleTransportationPage
+3. Wrap App in Router, add routes for /, /home-relocation, /office-relocation, /intercity-moving, /vehicle-transportation
+4. Add "Our System" section component and insert into main page
+5. Update Footer: services list, company list, email, address, remove caffeine link
+6. Scan all components for "Relocate Xpress", old email, and brand language violations; fix them

@@ -9,12 +9,13 @@ import ItemSelectorSection from "./components/ItemSelectorSection";
 import LiveOpsHowItWorks from "./components/LiveOpsHowItWorks";
 import MovePlan from "./components/MovePlan";
 import NationalTrustBar from "./components/NationalTrustBar";
+import OurSystem from "./components/OurSystem";
 import { calcPrice, calcTimeLabel, getDistance } from "./lib/relocateEngine";
 
 const queryClient = new QueryClient();
 
 export const WHATSAPP_URL =
-  "https://wa.me/917090913336?text=Hi%20Relocate%20Xpress,%20I%20want%20a%20moving%20quote";
+  "https://wa.me/916296982596?text=Hi%20MoveX,%20I%20want%20a%20moving%20quote";
 
 export function openWhatsApp() {
   window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
@@ -56,6 +57,7 @@ export default function App() {
             dynamicTimeLabel={dynamicTimeLabel}
           />
           <LiveOpsHowItWorks />
+          <OurSystem />
           <ItemSelectorSection />
           <Guarantee onBookSlot={openWhatsApp} />
         </main>

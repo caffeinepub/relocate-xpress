@@ -213,7 +213,7 @@ export default function Hero({
   return (
     <section
       id="services"
-      className="relative min-h-screen flex flex-col justify-center pt-8 pb-16 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center pt-16 pb-24 overflow-hidden"
     >
       <div className="absolute inset-0 hero-bloom pointer-events-none" />
       <div
@@ -282,7 +282,7 @@ export default function Hero({
         style={{ zIndex: 10 }}
       >
         {/* TOP TRUST BAR */}
-        <div className="flex items-center justify-center mb-6">
+        <div className="flex items-center justify-center mb-10">
           <div
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold"
             style={{
@@ -292,22 +292,22 @@ export default function Hero({
             }}
           >
             <span>⭐</span>
-            <span>Relocation, engineered.</span>
+            <span>Relocation. Engineered.</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="flex flex-col gap-6">
-            <div>
-              {/* Brand positioning line */}
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              {/* Eyebrow — category-leading statement */}
               <p
-                className="text-xs font-semibold uppercase tracking-[0.2em] mb-3"
-                style={{ color: "oklch(0.82 0.11 82 / 0.65)" }}
+                className="text-sm font-bold uppercase tracking-[0.15em]"
+                style={{ color: "oklch(0.88 0.12 82 / 0.8)" }}
               >
-                India's Smart Relocation Network
+                India&apos;s Intelligent Relocation System
               </p>
 
-              <h1 className="text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight mb-3">
+              <h1 className="text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight">
                 <span className="text-foreground">Your move. </span>
                 <span style={{ color: "oklch(0.88 0.12 82)" }}>
                   Fully controlled.
@@ -315,24 +315,32 @@ export default function Hero({
               </h1>
 
               <p
-                className="text-base font-bold mb-1"
+                className="text-base font-bold"
                 style={{ color: "oklch(0.88 0.12 82)" }}
               >
                 Across India — Door to Door
               </p>
 
-              <p
-                className="text-lg font-bold"
-                style={{ color: "oklch(0.88 0.12 82)" }}
-              >
-                Or we pay you.
+              <p className="text-lg">
+                <span style={{ color: "oklch(0.62 0.02 252)" }}>
+                  Guaranteed.{" "}
+                </span>
+                <span
+                  className="font-bold"
+                  style={{
+                    color: "oklch(0.88 0.12 82)",
+                    textShadow: "0 0 12px oklch(0.88 0.12 82 / 0.4)",
+                  }}
+                >
+                  Or we pay you.
+                </span>
               </p>
 
               <p
-                className="text-xs font-medium mt-2"
+                className="text-xs font-medium"
                 style={{ color: "oklch(0.55 0.02 252)", fontStyle: "italic" }}
               >
-                Real-time pricing. Real-time tracking.
+                Real-time pricing. Live tracking. Instant confirmation.
               </p>
             </div>
 
@@ -526,7 +534,7 @@ export default function Hero({
             </div>
           </div>
 
-          {/* RIGHT COLUMN — Relocate Xpress System LIVE */}
+          {/* RIGHT COLUMN — MoveX System LIVE */}
           <div
             className="relative rounded-2xl p-8"
             style={{
@@ -547,7 +555,7 @@ export default function Hero({
                   className="text-base font-black tracking-wide"
                   style={{ color: "oklch(0.84 0.14 207)" }}
                 >
-                  Relocate Xpress System — LIVE
+                  MoveX System — LIVE
                 </span>
               </div>
               <div
@@ -732,7 +740,7 @@ export default function Hero({
                 className="text-xs font-medium"
                 style={{ color: "oklch(0.72 0.18 142)" }}
               >
-                Protected by Relocate Xpress System
+                Protected by MoveX System
               </span>
             </div>
 
@@ -745,7 +753,7 @@ export default function Hero({
                 color: "oklch(0.84 0.14 207 / 0.5)",
               }}
             >
-              Powered by Relocate Xpress Intelligence System™
+              Powered by MoveX Intelligence System™
             </p>
           </div>
         </div>

@@ -510,12 +510,12 @@ function buildWhatsAppUrl(quantities: Record<string, number>) {
   );
 
   if (selectedLines.length === 0) {
-    return "https://wa.me/917090913336?text=Hi%20Relocate%20Xpress,%20Here%20are%20my%20items%20for%20moving";
+    return "https://wa.me/916296982596?text=Hi%20MoveX,%20Here%20are%20my%20items%20for%20moving";
   }
 
   const itemsText = selectedLines.join(", ");
-  const message = `Hi Relocate Xpress, here are my items for moving: ${itemsText}. Please provide a quote.`;
-  return `https://wa.me/917090913336?text=${encodeURIComponent(message)}`;
+  const message = `Hi MoveX, here are my items for moving: ${itemsText}. Please provide a quote.`;
+  return `https://wa.me/916296982596?text=${encodeURIComponent(message)}`;
 }
 
 export default function ItemSelectorSection() {

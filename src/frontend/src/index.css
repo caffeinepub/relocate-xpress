@@ -412,3 +412,19 @@
       oklch(0.88 0.12 82 / 0.2);
   }
 }
+
+.footer-service-link {
+  color: oklch(0.45 0.02 252);
+  transition: color 0.15s ease;
+}
+.footer-service-link:hover {
+  color: oklch(0.88 0.12 82);
+}
+
+.footer-contact-link {
+  color: oklch(0.45 0.02 252);
+  transition: color 0.15s ease;
+}
+.footer-contact-link:hover {
+  color: oklch(0.88 0.12 82);
+}

@@ -32,6 +32,12 @@ const FEATURES = [
   },
 ];
 
+const PROMISE_ITEMS = [
+  "Zero damage guarantee",
+  "Fixed transparent pricing",
+  "Professionally trained teams",
+];
+
 export default function MovePlan({
   homeSize,
   fromLocation,
@@ -61,7 +67,7 @@ export default function MovePlan({
         </div>
 
         <div
-          className="glass-card rounded-2xl p-6 mb-8 relative overflow-hidden"
+          className="glass-card rounded-2xl p-6 mb-6 relative overflow-hidden"
           style={{ borderRadius: "1.25rem" }}
         >
           <div
@@ -141,6 +147,43 @@ export default function MovePlan({
               100% DAMAGE GUARANTEE — OR WE PAY
             </span>
           </div>
+        </div>
+
+        {/* Feature promise strip */}
+        <div
+          className="glass-card rounded-xl px-6 py-4 mb-6 flex flex-col sm:flex-row items-center justify-center gap-0"
+          style={{
+            borderRadius: "0.75rem",
+            border: "1px solid oklch(0.28 0.04 252)",
+          }}
+        >
+          {PROMISE_ITEMS.map((item, i) => (
+            <>
+              <div
+                key={item}
+                className="flex items-center gap-2 py-1 sm:py-0 px-4"
+              >
+                <span
+                  className="text-sm font-bold"
+                  style={{ color: "oklch(0.88 0.12 82)" }}
+                >
+                  ✓
+                </span>
+                <span
+                  className="text-xs font-semibold"
+                  style={{ color: "oklch(0.92 0.008 252)" }}
+                >
+                  {item}
+                </span>
+              </div>
+              {i < PROMISE_ITEMS.length - 1 && (
+                <div
+                  className="hidden sm:block w-px h-6"
+                  style={{ background: "oklch(0.28 0.04 252)" }}
+                />
+              )}
+            </>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

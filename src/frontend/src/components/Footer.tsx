@@ -1,39 +1,29 @@
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  Twitter,
-  Zap,
-} from "lucide-react";
+import { Mail, MapPin, Phone, Zap } from "lucide-react";
 
-const SOCIAL_ICONS = [
-  { Icon: Twitter, label: "Twitter" },
-  { Icon: Linkedin, label: "LinkedIn" },
-  { Icon: Instagram, label: "Instagram" },
-  { Icon: Facebook, label: "Facebook" },
+const CLICKABLE_SERVICES = [
+  { label: "Home Relocation", href: "#/home-relocation" },
+  { label: "Office Relocation", href: "#/office-relocation" },
+  { label: "Intercity Moving", href: "#/intercity-moving" },
+  { label: "Vehicle Transportation", href: "#/vehicle-transportation" },
 ];
 
-const SERVICE_LINKS = [
-  "Home Relocation",
-  "Office Shifting",
-  "Intercity Moves",
-  "Premium Packing",
-  "Storage Solutions",
+const NON_CLICKABLE_SERVICES = [
+  "Premium Packing & Handling",
+  "Secure Storage Solutions",
+  "Express Moving",
+  "Corporate Relocation",
 ];
+
 const COMPANY_LINKS = [
-  "About Us",
-  "Guarantee Policy",
+  "About MoveX",
+  "Our System",
+  "Safety & Guarantee",
   "Careers",
-  "Press",
   "Contact",
 ];
 
 export default function Footer() {
   const year = new Date().getFullYear();
-  const utmLink = `https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`;
 
   return (
     <footer
@@ -61,41 +51,19 @@ export default function Footer() {
                 className="font-bold text-base"
                 style={{ color: "oklch(0.88 0.12 82)" }}
               >
-                Relocate Xpress
+                MoveX
               </span>
             </div>
             <p
               className="text-sm leading-relaxed mb-3"
               style={{ color: "oklch(0.45 0.02 252)" }}
             >
-              India's Smart Relocation Network. The fastest, safest, most
-              transparent way to move — across 500+ cities.
+              India&apos;s Smart Relocation Network. The fastest, safest, most
+              transparent relocation system &mdash; across 500+ cities.
             </p>
-            <p
-              className="text-xs mb-5"
-              style={{ color: "oklch(0.35 0.02 252)" }}
-            >
+            <p className="text-xs" style={{ color: "oklch(0.35 0.02 252)" }}>
               Operating across major cities in India
             </p>
-            <div className="flex gap-2">
-              {SOCIAL_ICONS.map(({ Icon, label }) => (
-                <a
-                  key={label}
-                  href="https://relocatexpress.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{
-                    background: "oklch(0.16 0.04 252)",
-                    border: "1px solid oklch(0.22 0.04 252)",
-                    color: "oklch(0.55 0.02 252)",
-                  }}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Services column */}
@@ -107,15 +75,24 @@ export default function Footer() {
               Services
             </h4>
             <ul className="space-y-2.5">
-              {SERVICE_LINKS.map((item) => (
-                <li key={item}>
+              {CLICKABLE_SERVICES.map((item) => (
+                <li key={item.label}>
                   <a
-                    href="https://relocatexpress.com"
-                    className="text-sm transition-colors hover:text-foreground"
-                    style={{ color: "oklch(0.45 0.02 252)" }}
+                    href={item.href}
+                    className="footer-service-link text-sm transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+              {NON_CLICKABLE_SERVICES.map((item) => (
+                <li key={item}>
+                  <span
+                    className="text-sm"
+                    style={{ color: "oklch(0.35 0.02 252)", cursor: "default" }}
                   >
                     {item}
-                  </a>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -132,13 +109,12 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {COMPANY_LINKS.map((item) => (
                 <li key={item}>
-                  <a
-                    href="https://relocatexpress.com"
-                    className="text-sm transition-colors hover:text-foreground"
+                  <span
+                    className="text-sm"
                     style={{ color: "oklch(0.45 0.02 252)" }}
                   >
                     {item}
-                  </a>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -155,43 +131,43 @@ export default function Footer() {
             <ul className="space-y-3.5">
               <li>
                 <a
-                  href="tel:+917090913336"
-                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
-                  style={{ color: "oklch(0.45 0.02 252)" }}
+                  href="tel:+916296982596"
+                  data-ocid="footer.phone.link"
+                  className="footer-contact-link flex items-start gap-2.5 text-sm transition-colors"
                 >
                   <Phone
-                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    className="w-4 h-4 mt-0.5 flex-shrink-0"
                     style={{ color: "oklch(0.82 0.11 82)" }}
                   />
-                  +91 70909 13336
+                  +91 6296982596
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:info@relocatexpress.com"
-                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
-                  style={{ color: "oklch(0.45 0.02 252)" }}
+                  href="mailto:support@movexindia.com"
+                  data-ocid="footer.email.link"
+                  className="footer-contact-link flex items-start gap-2.5 text-sm transition-colors"
                 >
                   <Mail
-                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    className="w-4 h-4 mt-0.5 flex-shrink-0"
                     style={{ color: "oklch(0.82 0.11 82)" }}
                   />
-                  info@relocatexpress.com
+                  support@movexindia.com
                 </a>
               </li>
               <li>
                 <a
-                  href="https://maps.google.com/?q=4th+A,+1,+Main,+Mysore+Rd,+Metro+Lay+Out,+Nayanda+Halli,+Bengaluru,+Karnataka+560026"
+                  href="https://maps.google.com/?q=4th+A,+1st+Main+Rd,+Mysore+Rd,+Metro+Layout,+Nayandahalli,+Bengaluru,+Karnataka+560026"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
-                  style={{ color: "oklch(0.45 0.02 252)" }}
+                  data-ocid="footer.address.link"
+                  className="footer-contact-link flex items-start gap-2.5 text-sm transition-colors"
                 >
                   <MapPin
-                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    className="w-4 h-4 mt-0.5 flex-shrink-0"
                     style={{ color: "oklch(0.82 0.11 82)" }}
                   />
-                  4th A, 1, Main, Mysore Rd, Metro Lay Out, Nayanda Halli,
+                  4th A, 1st Main Rd, Mysore Rd, Metro Layout, Nayandahalli,
                   Bengaluru, Karnataka 560026
                 </a>
               </li>
@@ -200,23 +176,11 @@ export default function Footer() {
         </div>
 
         <div
-          className="flex flex-col md:flex-row items-center justify-between gap-3 pt-8"
+          className="flex items-center justify-center pt-8"
           style={{ borderTop: "1px solid oklch(0.16 0.04 252)" }}
         >
           <p className="text-xs" style={{ color: "oklch(0.38 0.02 252)" }}>
-            © {year} Relocate Xpress. All rights reserved.
-          </p>
-          <p className="text-xs" style={{ color: "oklch(0.35 0.02 252)" }}>
-            Built with ❤️ using{" "}
-            <a
-              href={utmLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
-              style={{ color: "oklch(0.62 0.02 252)" }}
-            >
-              caffeine.ai
-            </a>
+            &copy; {year} MoveX. All rights reserved.
           </p>
         </div>
       </div>

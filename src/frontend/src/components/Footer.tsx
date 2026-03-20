@@ -3,14 +3,11 @@ import { useState } from "react";
 import InfoModal, { CareersExtra, ContactExtra } from "./InfoModal";
 import type { ModalContent } from "./InfoModal";
 
-const CLICKABLE_SERVICES = [
-  { label: "Home Relocation", href: "#/home-relocation" },
-  { label: "Office Relocation", href: "#/office-relocation" },
-  { label: "Intercity Moving", href: "#/intercity-moving" },
-  { label: "Vehicle Transportation", href: "#/vehicle-transportation" },
-];
-
-const NON_CLICKABLE_SERVICES = [
+const ALL_SERVICES = [
+  "Home Relocation",
+  "Office Relocation",
+  "Intercity Moving",
+  "Vehicle Transportation",
   "Premium Packing & Handling",
   "Secure Storage Solutions",
   "Express Moving",
@@ -26,6 +23,62 @@ const COMPANY_LINKS = [
 ];
 
 const MODAL_CONTENT: Record<string, ModalContent> = {
+  "Home Relocation": {
+    title: "Home Relocation",
+    paragraphs: [
+      "MoveX provides seamless home shifting services designed for safety, speed, and transparency.",
+      "From packing to final setup, everything is handled professionally to ensure a stress-free move.",
+    ],
+    bullets: [
+      "Complete packing & unpacking",
+      "Furniture handling & setup",
+      "Fragile item protection",
+      "Dedicated moving team",
+    ],
+    highlight: "Your home. Moved with precision.",
+  },
+  "Office Relocation": {
+    title: "Office Relocation",
+    paragraphs: [
+      "We relocate offices efficiently with minimal disruption to your business operations.",
+      "Our team ensures secure handling of workstations, documents, and equipment.",
+    ],
+    bullets: [
+      "Office packing & labeling",
+      "IT equipment handling",
+      "Weekend or off-hour shifting",
+      "Organized setup at new location",
+    ],
+    highlight: "Shift your office. Not your workflow.",
+  },
+  "Intercity Moving": {
+    title: "Intercity Moving",
+    paragraphs: [
+      "Move across cities with complete coordination, tracking, and safe transportation.",
+      "We manage long-distance logistics with optimized routes and reliable delivery timelines.",
+    ],
+    bullets: [
+      "Door-to-door relocation",
+      "Secure transport",
+      "Route optimization",
+      "Live coordination",
+    ],
+    highlight: "Across cities. Without uncertainty.",
+  },
+  "Vehicle Transportation": {
+    title: "Vehicle Transportation",
+    paragraphs: [
+      "Transport your car or bike safely with our specialized vehicle handling service.",
+      "We ensure secure loading, transit, and delivery without damage.",
+    ],
+    bullets: [
+      "Car & bike shifting",
+      "Secure carriers",
+      "Door pickup & delivery",
+      "Condition assurance",
+    ],
+    highlight: "Your vehicle. Delivered safely.",
+  },
   "Premium Packing & Handling": {
     title: "Premium Packing & Handling",
     paragraphs: [
@@ -184,17 +237,7 @@ export default function Footer() {
               Services
             </h4>
             <ul className="space-y-2.5">
-              {CLICKABLE_SERVICES.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="footer-service-link text-sm transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-              {NON_CLICKABLE_SERVICES.map((item) => (
+              {ALL_SERVICES.map((item) => (
                 <li key={item}>
                   <button
                     type="button"

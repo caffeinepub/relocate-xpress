@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import FadeIn from "./components/FadeIn";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import Footer from "./components/Footer";
 import Guarantee from "./components/Guarantee";
@@ -50,21 +51,37 @@ export default function App() {
             dynamicPrice={dynamicPrice}
             dynamicTimeLabel={dynamicTimeLabel}
           />
-          <NationalTrustBar />
-          <WhyTrustMoveX />
-          <MovePlan
-            homeSize={homeSize}
-            fromLocation={fromLocation}
-            toLocation={toLocation}
-            dynamicPrice={dynamicPrice}
-            dynamicTimeLabel={dynamicTimeLabel}
-          />
-          <LiveOpsHowItWorks />
-          <OurSystem />
-          <ItemSelectorSection />
-          <Guarantee onBookSlot={openWhatsApp} />
+          <FadeIn>
+            <NationalTrustBar />
+          </FadeIn>
+          <FadeIn>
+            <WhyTrustMoveX />
+          </FadeIn>
+          <FadeIn>
+            <MovePlan
+              homeSize={homeSize}
+              fromLocation={fromLocation}
+              toLocation={toLocation}
+              dynamicPrice={dynamicPrice}
+              dynamicTimeLabel={dynamicTimeLabel}
+            />
+          </FadeIn>
+          <FadeIn>
+            <LiveOpsHowItWorks />
+          </FadeIn>
+          <FadeIn>
+            <OurSystem />
+          </FadeIn>
+          <FadeIn>
+            <ItemSelectorSection />
+          </FadeIn>
+          <FadeIn>
+            <Guarantee onBookSlot={openWhatsApp} />
+          </FadeIn>
         </main>
-        <Footer />
+        <FadeIn>
+          <Footer />
+        </FadeIn>
       </div>
       <FloatingWhatsApp />
       <Toaster />

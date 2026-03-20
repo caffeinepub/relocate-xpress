@@ -127,7 +127,7 @@ export default function Guarantee({ onBookSlot: _onBookSlot }: GuaranteeProps) {
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="guarantee.book_now.primary_button"
-            className="btn-gold px-12 py-4 text-base font-black tracking-wide hover:scale-[1.03] transition-transform duration-150 inline-block"
+            className="btn-gold btn-gold-pulse px-12 py-4 text-base font-black tracking-wide inline-block"
           >
             Get Instant Price on WhatsApp
           </a>

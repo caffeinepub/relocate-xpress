@@ -441,3 +441,71 @@
 .footer-modal-btn:hover {
   color: oklch(0.88 0.12 82);
 }
+
+/* ─── Scroll fade-in ─────────────────────────────── */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ─── Button hover scale ─────────────────────────── */
+.btn-gold {
+  transition: all 0.2s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-1px) scale(1.03) !important;
+}
+.btn-gold:active {
+  transform: translateY(1px) scale(0.98) !important;
+}
+
+.btn-outline-gold:hover {
+  transform: translateY(-1px) scale(1.03) !important;
+}
+.btn-outline-gold:active {
+  transform: translateY(1px) scale(0.98) !important;
+}
+
+.btn-ghost-white:hover {
+  transform: translateY(-1px) scale(1.03) !important;
+}
+
+/* ─── Green WhatsApp CTA glow ────────────────────── */
+@keyframes green-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.72 0.18 142 / 0), 0 4px 18px oklch(0 0 0 / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px oklch(0.72 0.18 142 / 0.35), 0 0 40px 8px
+      oklch(0.72 0.18 142 / 0.15), 0 4px 18px oklch(0 0 0 / 0.4);
+  }
+}
+
+.btn-green-glow {
+  animation: green-glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* ─── Universal interactive transitions ─────────── */
+a,
+button {
+  transition-property: color, background-color, border-color, box-shadow,
+    transform, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}

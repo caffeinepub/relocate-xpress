@@ -437,7 +437,16 @@ export default function Hero({
                     fontWeight: 600,
                   }}
                 >
-                  No hidden charges. Final price before move.
+                  ✓ No advance required in most cases
+                </span>
+                <span
+                  style={{
+                    color: "oklch(0.72 0.18 142)",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                  }}
+                >
+                  ✓ Final price shared before move
                 </span>
               </div>
             </div>

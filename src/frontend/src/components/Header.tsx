@@ -9,7 +9,7 @@ export default function Header() {
       >
         <div className="flex items-center">
           <img
-            src="/assets/uploads/IMG_8178-1.jpeg"
+            src="/assets/uploads/IMG_8463-1.jpeg"
             alt="Relocate Xpress"
             style={{ height: "38px", width: "auto" }}
           />

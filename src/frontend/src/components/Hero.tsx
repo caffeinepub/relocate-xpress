@@ -292,7 +292,7 @@ export default function Hero({
             }}
           >
             <span>⭐</span>
-            <span>Trusted by 10,000+ customers across India</span>
+            <span>Relocation, engineered.</span>
           </div>
         </div>
 

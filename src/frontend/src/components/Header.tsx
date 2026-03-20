@@ -33,7 +33,7 @@ export default function Header() {
         <a
           href="tel:+916296982596"
           data-ocid="header.call_now.button"
-          className="flex items-center gap-1.5 btn-ghost-white px-4 py-2 text-sm font-semibold"
+          className="flex items-center gap-1.5 btn-outline-gold px-4 py-2 text-sm font-semibold"
         >
           <Phone className="w-3.5 h-3.5" />
           Call Now

@@ -13,15 +13,7 @@ export default function NationalTrustBar() {
         className="text-center text-xs font-semibold tracking-[0.12em] uppercase"
         style={{ color: "oklch(0.82 0.11 82)" }}
       >
-        Live across 500+ cities
-        <span className="mx-3" style={{ color: "oklch(0.82 0.11 82 / 0.5)" }}>
-          •
-        </span>
-        Real-time tracking
-        <span className="mx-3" style={{ color: "oklch(0.82 0.11 82 / 0.5)" }}>
-          •
-        </span>
-        Verified teams
+        Built for transparency and reliability
       </p>
     </section>
   );

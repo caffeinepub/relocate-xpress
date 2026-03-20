@@ -215,21 +215,48 @@ export default function Hero({
       id="services"
       className="relative min-h-screen flex flex-col justify-center pt-16 pb-24 overflow-hidden"
     >
-      <div className="absolute inset-0 hero-bloom pointer-events-none" />
+      {/* TRUCK BACKGROUND IMAGE with zoom animation */}
+      <img
+        src="/assets/uploads/06BBE921-0F9E-4D16-A022-2093BF504546-1.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full"
+        style={{
+          objectFit: "cover",
+          objectPosition: "right center",
+          filter: "blur(2px)",
+          transform: "scale(1.06)",
+          animation: "heroZoom 12s ease-out infinite alternate",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Directional dark overlay — heavier on left (text), lighter on right (truck visible) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.35) 100%)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Subtle grid texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(oklch(0.97 0.008 252) 1px, transparent 1px), linear-gradient(90deg, oklch(0.97 0.008 252) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
+          zIndex: 2,
         }}
       />
 
-      {/* Animated route lines background */}
+      {/* Animated route lines */}
       <svg
         aria-hidden="true"
         className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 0 }}
+        style={{ zIndex: 3 }}
         viewBox="0 0 1200 800"
         preserveAspectRatio="xMidYMid slice"
       >
@@ -277,6 +304,13 @@ export default function Hero({
         ))}
       </svg>
 
+      <style>{`
+        @keyframes heroZoom {
+          from { transform: scale(1.0); }
+          to   { transform: scale(1.06); }
+        }
+      `}</style>
+
       <div
         className="relative mx-auto max-w-6xl w-full px-4"
         style={{ zIndex: 10 }}
@@ -297,23 +331,40 @@ export default function Hero({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
+            {/* Hero text block */}
             <div className="flex flex-col gap-4">
-              {/* Eyebrow — category-leading statement */}
+              {/* Brand name */}
+              <p
+                className="text-4xl lg:text-5xl font-black tracking-tight"
+                style={{
+                  color: "#ffffff",
+                  textShadow:
+                    "0 0 24px oklch(0.88 0.12 82 / 0.45), 0 0 48px oklch(0.88 0.12 82 / 0.2)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                MoveX
+              </p>
+
+              {/* Eyebrow */}
               <p
                 className="text-sm font-bold uppercase tracking-[0.15em]"
-                style={{ color: "oklch(0.88 0.12 82 / 0.8)" }}
+                style={{ color: "oklch(0.88 0.12 82 / 0.85)" }}
               >
                 India&apos;s Intelligent Relocation System
               </p>
 
-              <h1 className="text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight">
-                <span className="text-foreground">Your move. </span>
+              {/* Main headline */}
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.08] tracking-tight">
+                <span className="text-white">Your move. </span>
                 <span style={{ color: "oklch(0.88 0.12 82)" }}>
                   Fully controlled.
                 </span>
               </h1>
 
+              {/* Subline */}
               <p
                 className="text-base font-bold"
                 style={{ color: "oklch(0.88 0.12 82)" }}
@@ -321,29 +372,77 @@ export default function Hero({
                 Across India — Door to Door
               </p>
 
+              {/* Sub-line trust */}
+              <p
+                className="text-xs font-medium"
+                style={{
+                  color: "oklch(0.55 0.02 252)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Transparent pricing. Verified professionals. No hidden charges.
+              </p>
+
+              {/* Guarantee */}
               <p className="text-lg">
-                <span style={{ color: "oklch(0.62 0.02 252)" }}>
-                  Guaranteed.{" "}
+                <span style={{ color: "oklch(0.75 0.02 252)" }}>
+                  Zero damage.{" "}
                 </span>
                 <span
-                  className="font-bold"
+                  className="font-black"
                   style={{
                     color: "oklch(0.88 0.12 82)",
-                    textShadow: "0 0 12px oklch(0.88 0.12 82 / 0.4)",
+                    textShadow: "0 0 16px oklch(0.88 0.12 82 / 0.5)",
                   }}
                 >
                   Or we pay you.
                 </span>
               </p>
 
-              <p
-                className="text-xs font-medium"
-                style={{ color: "oklch(0.55 0.02 252)", fontStyle: "italic" }}
-              >
-                Real-time pricing. Live tracking. Instant confirmation.
-              </p>
+              {/* CTA Button */}
+              <div className="flex flex-col gap-3 mt-2">
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-ocid="hero.lock_slot.primary_button"
+                  className="btn-outline-gold inline-block text-center py-4 px-8 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150"
+                  style={{ maxWidth: "340px" }}
+                >
+                  Get Instant Price on WhatsApp
+                </a>
+                <p
+                  className="text-xs font-medium"
+                  style={{
+                    color: "oklch(0.55 0.02 252)",
+                    fontStyle: "italic",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  Powered by MoveX Intelligence System™
+                </p>
+                <span
+                  style={{
+                    color: "oklch(0.72 0.18 142)",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                  }}
+                >
+                  ● Average response time: under 2 minutes
+                </span>
+                <span
+                  style={{
+                    color: "oklch(0.72 0.18 142)",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                  }}
+                >
+                  No hidden charges. Final price before move.
+                </span>
+              </div>
             </div>
 
+            {/* Move Calculator */}
             <div
               id="input-panel"
               className="glass-card rounded-2xl p-6"
@@ -495,15 +594,6 @@ export default function Hero({
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-ocid="hero.lock_slot.primary_button"
-                  className="btn-gold btn-gold-pulse w-full py-4 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150 text-center block"
-                >
-                  Lock My Move in 30 Seconds
-                </a>
                 <p
                   className="text-center text-xs font-semibold"
                   style={{ color: "oklch(0.72 0.18 142)" }}
@@ -518,7 +608,7 @@ export default function Hero({
                     data-ocid="hero.get_price.secondary_button"
                     className="btn-outline-gold py-2.5 text-xs font-semibold text-center block"
                   >
-                    Get Price in 30 Sec
+                    Get Instant Price on WhatsApp
                   </a>
                   <a
                     href={WHATSAPP_URL}
@@ -527,10 +617,38 @@ export default function Hero({
                     data-ocid="hero.talk_expert.button"
                     className="btn-ghost-white py-2.5 text-xs font-semibold text-center block"
                   >
-                    Talk to Expert
+                    Chat on WhatsApp
                   </a>
                 </div>
               </div>
+
+              {/* Micro-trust lines */}
+              <div
+                className="mt-4 pt-4 flex flex-col gap-1.5"
+                style={{ borderTop: "1px solid oklch(0.22 0.04 252)" }}
+              >
+                {[
+                  "✓ No advance required in most cases",
+                  "✓ Pay after confirmation",
+                  "✓ Support available on call & WhatsApp",
+                ].map((line) => (
+                  <p
+                    key={line}
+                    className="text-xs"
+                    style={{ color: "oklch(0.72 0.18 142)", fontWeight: 600 }}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              {/* Flexible scheduling note */}
+              <p
+                className="mt-3 text-xs"
+                style={{ color: "oklch(0.42 0.02 252)" }}
+              >
+                Plan your move in advance. Flexible scheduling available.
+              </p>
             </div>
           </div>
 

@@ -1003,7 +1003,7 @@ export default function ItemSelectorSection() {
                 className="btn-gold w-full py-3 text-sm font-black tracking-wide text-center block"
                 style={{ borderRadius: "0.875rem" }}
               >
-                Lock My Slot Now
+                Get Instant Price on WhatsApp
               </a>
               <p
                 className="mt-2 text-xs text-center font-semibold"

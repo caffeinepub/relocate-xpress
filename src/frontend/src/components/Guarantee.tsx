@@ -129,7 +129,7 @@ export default function Guarantee({ onBookSlot: _onBookSlot }: GuaranteeProps) {
             data-ocid="guarantee.book_now.primary_button"
             className="btn-gold px-12 py-4 text-base font-black tracking-wide hover:scale-[1.03] transition-transform duration-150 inline-block"
           >
-            Lock My Slot Now
+            Get Instant Price on WhatsApp
           </a>
           <p
             className="mt-2 text-xs font-semibold"

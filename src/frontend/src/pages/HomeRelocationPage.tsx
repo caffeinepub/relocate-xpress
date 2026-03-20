@@ -103,7 +103,7 @@ export default function HomeRelocationPage() {
             className="btn-gold inline-flex items-center gap-2 px-8 py-4 text-sm font-bold tracking-wide"
           >
             <MessageCircle className="w-4 h-4" />
-            Get a Free Quote on WhatsApp
+            Get Instant Price on WhatsApp
           </a>
         </div>
       </main>

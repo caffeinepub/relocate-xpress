@@ -7,12 +7,24 @@ export default function Header() {
         className="mx-auto max-w-6xl glass-card rounded-full px-5 py-3 flex items-center justify-between"
         style={{ borderRadius: "9999px" }}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-2.5">
           <img
             src="/assets/uploads/IMG_8463-1.jpeg"
-            alt="Relocate Xpress"
-            style={{ height: "38px", width: "auto" }}
+            alt="Relocate Xpress Logo"
+            style={{
+              height: "36px",
+              width: "auto",
+              objectFit: "contain",
+              imageRendering: "auto",
+              display: "block",
+            }}
           />
+          <span
+            className="text-sm font-light tracking-widest text-white/80"
+            style={{ letterSpacing: "0.15em" }}
+          >
+            Relocate Xpress
+          </span>
         </div>
 
         <a

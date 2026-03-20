@@ -1,18 +1,24 @@
 import { Toaster } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
-import BookingModal from "./components/BookingModal";
 import Footer from "./components/Footer";
 import Guarantee from "./components/Guarantee";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import ItemSelectorSection from "./components/ItemSelectorSection";
 import LiveOpsHowItWorks from "./components/LiveOpsHowItWorks";
 import MovePlan from "./components/MovePlan";
 
 const queryClient = new QueryClient();
 
+export const WHATSAPP_URL =
+  "https://wa.me/917090913336?text=Hi%20Relocate%20Xpress,%20I%20want%20a%20moving%20quote";
+
+export function openWhatsApp() {
+  window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+}
+
 export default function App() {
-  const [bookingOpen, setBookingOpen] = useState(false);
   const [homeSize, setHomeSize] = useState("2BHK");
   const [fromLocation, setFromLocation] = useState("Whitefield");
   const [toLocation, setToLocation] = useState("Indiranagar");
@@ -32,7 +38,7 @@ export default function App() {
             setFromLocation={setFromLocation}
             toLocation={toLocation}
             setToLocation={setToLocation}
-            onBookSlot={() => setBookingOpen(true)}
+            onBookSlot={openWhatsApp}
           />
           <MovePlan
             homeSize={homeSize}
@@ -40,13 +46,10 @@ export default function App() {
             toLocation={toLocation}
           />
           <LiveOpsHowItWorks />
-          <Guarantee onBookSlot={() => setBookingOpen(true)} />
+          <ItemSelectorSection />
+          <Guarantee onBookSlot={openWhatsApp} />
         </main>
         <Footer />
-        <BookingModal
-          open={bookingOpen}
-          onClose={() => setBookingOpen(false)}
-        />
       </div>
       <Toaster />
     </QueryClientProvider>

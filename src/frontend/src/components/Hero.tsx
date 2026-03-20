@@ -1,6 +1,6 @@
 import { ChevronRight, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useGetEstimate } from "../hooks/useQueries";
+import { WHATSAPP_URL } from "../App";
 import RouteAnimation from "./RouteAnimation";
 
 interface HeroProps {
@@ -22,9 +22,8 @@ export default function Hero({
   setFromLocation,
   toLocation,
   setToLocation,
-  onBookSlot,
+  onBookSlot: _onBookSlot,
 }: HeroProps) {
-  const { data: estimate } = useGetEstimate(homeSize);
   const [animKey, setAnimKey] = useState(0);
   const [isCalculating, setIsCalculating] = useState(false);
   const [secondsAgo, setSecondsAgo] = useState(0);
@@ -67,11 +66,11 @@ export default function Hero({
     setTimeout(() => setIsCalculating(false), 800);
   };
 
-  const cost = estimate
-    ? Number(estimate.cost).toLocaleString("en-IN")
-    : "8,500";
-  const time = estimate ? Number(estimate.time) : 6;
-  const team = estimate ? Number(estimate.teamSize) : 4;
+  // Time and team size vary by home size for visual system feel
+  const timeMap: Record<string, number> = { "1BHK": 4, "2BHK": 6, "3BHK": 8 };
+  const teamMap: Record<string, number> = { "1BHK": 3, "2BHK": 4, "3BHK": 5 };
+  const time = timeMap[homeSize] ?? 6;
+  const team = teamMap[homeSize] ?? 4;
 
   const rows = [
     {
@@ -80,13 +79,15 @@ export default function Hero({
       icon: "⏱",
       highlight: false,
       badge: false,
+      isPrice: false,
     },
     {
-      label: "Estimated Cost",
-      value: `₹${cost}`,
+      label: "Starting Price",
+      value: "Starting from ₹9,500",
       icon: "₹",
       highlight: true,
       badge: false,
+      isPrice: true,
     },
     {
       label: "Team Assigned",
@@ -94,6 +95,7 @@ export default function Hero({
       icon: "👥",
       highlight: false,
       badge: false,
+      isPrice: false,
     },
     {
       label: "Risk Level",
@@ -101,6 +103,7 @@ export default function Hero({
       icon: "🛡",
       highlight: false,
       badge: true,
+      isPrice: false,
     },
   ];
 
@@ -331,14 +334,22 @@ export default function Hero({
                 >
                   This move is protected.
                 </p>
-                <button
-                  type="button"
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-ocid="hero.lock_slot.primary_button"
-                  onClick={onBookSlot}
-                  className="btn-gold w-full py-4 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150"
+                  className="btn-gold w-full py-4 text-sm font-bold tracking-wide hover:scale-[1.03] transition-transform duration-150 text-center block"
                 >
-                  Lock My Safe Move
-                </button>
+                  Lock My Slot Now
+                </a>
+                {/* WhatsApp conversion text */}
+                <p
+                  className="text-center text-xs font-semibold"
+                  style={{ color: "oklch(0.72 0.18 142)" }}
+                >
+                  ⚡ Instant confirmation on WhatsApp
+                </p>
                 {/* Micro trust below CTA */}
                 <p
                   className="text-center text-xs"
@@ -347,24 +358,24 @@ export default function Hero({
                   No damage. No hidden charges. No risk.
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     data-ocid="hero.get_price.secondary_button"
-                    onClick={onBookSlot}
-                    className="btn-outline-gold py-2.5 text-xs font-semibold"
+                    className="btn-outline-gold py-2.5 text-xs font-semibold text-center block"
                   >
                     Get Price in 30 Sec
-                  </button>
-                  <button
-                    type="button"
+                  </a>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     data-ocid="hero.talk_expert.button"
-                    className="btn-ghost-white py-2.5 text-xs font-semibold"
-                    onClick={() => {
-                      window.open("tel:+918001234567");
-                    }}
+                    className="btn-ghost-white py-2.5 text-xs font-semibold text-center block"
                   >
                     Talk to Expert
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -476,50 +487,69 @@ export default function Hero({
               {rows.map((row, i) => (
                 <div
                   key={`${animKey}-${row.label}`}
-                  className="flex items-center justify-between py-3.5 animate-count-up"
+                  className="animate-count-up"
                   style={{
                     borderBottom:
-                      i < 3 ? "1px solid oklch(0.22 0.04 252)" : "none",
+                      i < rows.length - 1
+                        ? "1px solid oklch(0.22 0.04 252)"
+                        : "none",
                     animationDelay: `${i * 80}ms`,
                     animationFillMode: "both",
                   }}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-base">{row.icon}</span>
-                    <span
-                      className="text-sm"
-                      style={{ color: "oklch(0.62 0.02 252)" }}
-                    >
-                      {row.label}
-                    </span>
+                  <div className="flex items-center justify-between py-3.5">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-base">{row.icon}</span>
+                      <span
+                        className="text-sm"
+                        style={{ color: "oklch(0.62 0.02 252)" }}
+                      >
+                        {row.label}
+                      </span>
+                    </div>
+                    {row.badge ? (
+                      <span
+                        className="text-sm font-black tracking-widest px-3 py-1 rounded-full"
+                        style={{
+                          color: "oklch(0.84 0.14 207)",
+                          background: "oklch(0.84 0.14 207 / 0.08)",
+                          border: "1px solid oklch(0.84 0.14 207 / 0.3)",
+                          textShadow: "0 0 12px oklch(0.84 0.14 207 / 0.6)",
+                        }}
+                      >
+                        {row.value}
+                      </span>
+                    ) : row.isPrice ? (
+                      <span
+                        className="text-sm font-bold"
+                        style={{
+                          color: "oklch(0.88 0.12 82)",
+                          textShadow: "0 0 10px oklch(0.88 0.12 82 / 0.45)",
+                        }}
+                      >
+                        {row.value}
+                      </span>
+                    ) : (
+                      <span
+                        className="text-sm font-bold"
+                        style={{
+                          color: "oklch(0.92 0.008 252)",
+                        }}
+                      >
+                        {row.value}
+                      </span>
+                    )}
                   </div>
-                  {row.badge ? (
-                    <span
-                      className="text-sm font-black tracking-widest px-3 py-1 rounded-full"
+                  {row.isPrice && (
+                    <p
+                      className="text-xs pb-2"
                       style={{
-                        color: "oklch(0.84 0.14 207)",
-                        background: "oklch(0.84 0.14 207 / 0.08)",
-                        border: "1px solid oklch(0.84 0.14 207 / 0.3)",
-                        textShadow: "0 0 12px oklch(0.84 0.14 207 / 0.6)",
+                        color: "oklch(0.48 0.02 252)",
+                        paddingLeft: "2.25rem",
                       }}
                     >
-                      {row.value}
-                    </span>
-                  ) : (
-                    <span
-                      className={`text-sm font-bold${
-                        row.highlight && isCalculating
-                          ? " animate-pulse-value"
-                          : ""
-                      }`}
-                      style={{
-                        color: row.highlight
-                          ? "oklch(0.88 0.12 82)"
-                          : "oklch(0.92 0.008 252)",
-                      }}
-                    >
-                      {row.value}
-                    </span>
+                      *Final price confirmed after quick inspection on WhatsApp
+                    </p>
                   )}
                 </div>
               ))}

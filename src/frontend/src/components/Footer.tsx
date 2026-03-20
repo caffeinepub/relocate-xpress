@@ -1,4 +1,13 @@
-import { Facebook, Instagram, Linkedin, Twitter, Zap } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+  Zap,
+} from "lucide-react";
 
 const SOCIAL_ICONS = [
   { Icon: Twitter, label: "Twitter" },
@@ -32,7 +41,7 @@ export default function Footer() {
       style={{ borderTop: "1px solid oklch(0.18 0.04 252)" }}
     >
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand column */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -126,6 +135,60 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Contact column */}
+          <div>
+            <h4
+              className="text-xs font-bold uppercase tracking-widest mb-4"
+              style={{ color: "oklch(0.82 0.11 82)" }}
+            >
+              Contact
+            </h4>
+            <ul className="space-y-3.5">
+              <li>
+                <a
+                  href="tel:+917090913336"
+                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
+                  style={{ color: "oklch(0.45 0.02 252)" }}
+                >
+                  <Phone
+                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    style={{ color: "oklch(0.82 0.11 82)" }}
+                  />
+                  +91 70909 13336
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:info@relocatexpress.com"
+                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
+                  style={{ color: "oklch(0.45 0.02 252)" }}
+                >
+                  <Mail
+                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    style={{ color: "oklch(0.82 0.11 82)" }}
+                  />
+                  info@relocatexpress.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://maps.google.com/?q=4th+A,+1,+Main,+Mysore+Rd,+Metro+Lay+Out,+Nayanda+Halli,+Bengaluru,+Karnataka+560026"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2.5 text-sm transition-colors hover:text-foreground group"
+                  style={{ color: "oklch(0.45 0.02 252)" }}
+                >
+                  <MapPin
+                    className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-gold transition-colors"
+                    style={{ color: "oklch(0.82 0.11 82)" }}
+                  />
+                  4th A, 1, Main, Mysore Rd, Metro Lay Out, Nayanda Halli,
+                  Bengaluru, Karnataka 560026
+                </a>
+              </li>
             </ul>
           </div>
         </div>

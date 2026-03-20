@@ -1,4 +1,5 @@
 import { AlertCircle, CheckCircle, Shield } from "lucide-react";
+import { WHATSAPP_URL } from "../App";
 
 interface GuaranteeProps {
   onBookSlot: () => void;
@@ -31,7 +32,7 @@ const GUARANTEES = [
   },
 ];
 
-export default function Guarantee({ onBookSlot }: GuaranteeProps) {
+export default function Guarantee({ onBookSlot: _onBookSlot }: GuaranteeProps) {
   return (
     <section id="guarantee" className="py-20 px-4 relative overflow-hidden">
       <div
@@ -121,15 +122,22 @@ export default function Guarantee({ onBookSlot }: GuaranteeProps) {
           >
             This move is protected.
           </p>
-          <button
-            type="button"
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-ocid="guarantee.book_now.primary_button"
-            onClick={onBookSlot}
-            className="btn-gold px-12 py-4 text-base font-black tracking-wide hover:scale-[1.03] transition-transform duration-150"
+            className="btn-gold px-12 py-4 text-base font-black tracking-wide hover:scale-[1.03] transition-transform duration-150 inline-block"
           >
-            Lock My Safe Move
-          </button>
-          <p className="mt-3 text-xs" style={{ color: "oklch(0.45 0.02 252)" }}>
+            Lock My Slot Now
+          </a>
+          <p
+            className="mt-2 text-xs font-semibold"
+            style={{ color: "oklch(0.72 0.18 142)" }}
+          >
+            ⚡ Instant confirmation on WhatsApp
+          </p>
+          <p className="mt-2 text-xs" style={{ color: "oklch(0.45 0.02 252)" }}>
             No damage. No hidden charges. No risk.
           </p>
         </div>
